@@ -1,4 +1,5 @@
 const express = require('express');
+const { cors } = require('./cors/Cors.js')
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('db.json');
@@ -10,12 +11,7 @@ app.use((req, res, next) => {
         return res.status(200).send('Max ist nicht ein artist')
     next()
 })
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS,PUT");
-    next()
-})
+app.use(cors())
 const records =
     [
         { id: 1, artist: 'hamid', title: 'jazz', year: 2022, price: 9.99 },
