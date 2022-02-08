@@ -1,4 +1,3 @@
-const { Console } = require('console');
 const express = require('express');
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
@@ -6,13 +5,27 @@ const adapter = new FileSync('db.json');
 const db = low(adapter);
 const app = express();
 app.use(express.json());
+app.use((req, res, next) => {
+    if (req.query.artist === 'Max')
+        return res.status(200).send('Max ist nicht ein artist')
+    next()
+})
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS,PUT");
+    next()
+})
 const records =
     [
-        { id: 1, name: 'hamid' },
-        { id: 2, name: 'saeed' }
+        { id: 1, artist: 'hamid', title: 'jazz', year: 2022, price: 9.99 },
+        { id: 2, artist: 'saeed', title: 'rock', year: 1990, price: 8.95 }
     ]
 app.get('/', (req, res) => {
-    res.send('Hi min server with express');
+    res.status(200).send('Hi min server with express');
+})
+app.get('/key', (req, res) => {
+    res.status(200).send('12345');
 })
 app.get('/records', (req, res) => {
     res.send(records);
@@ -20,7 +33,10 @@ app.get('/records', (req, res) => {
 app.post('/records', (req, res) => {
     const record = {
         id: records[records.length - 1].id + 1,
-        name: req.body.name,
+        artist: req.body.artist,
+        title: req.body.title,
+        year: req.body.year,
+        price: req.body.price,
     }
     res.send(records)
     records.push(record)
