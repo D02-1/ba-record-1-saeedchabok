@@ -19,7 +19,7 @@ const records =
     ]
 
 app.get('/records', (req, res) => {
-    res.send(records);
+    res.status.send(records);
 })
 app.post('/records', (req, res) => {
     const record = {
@@ -29,7 +29,7 @@ app.post('/records', (req, res) => {
         year: req.body.year,
         price: req.body.price,
     }
-    res.send(records)
+    res.status.send(records)
     records.push(record)
     db.defaults(records).write();
 })
