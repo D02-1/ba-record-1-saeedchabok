@@ -1,5 +1,4 @@
 const express = require('express');
-const records = require('../public/Initdata');
 const router = express.Router();
 const users = require('../public/initusers');
 
@@ -18,7 +17,7 @@ router.route('/')
             email: req.body.email,
             Password: req.body.password,
         };
-        records.push(user);
+        users.push(user);
         res.status(200).send(user);
     });
 router.route('/:id')
@@ -28,7 +27,7 @@ router.route('/:id')
         if (user && user.id)
             res.status(200).send(`${user.id} , ${user.firstName} `);
         else
-            res.status(404).send('cannot found the artist');
+            res.status(404).send('cannot found the user');
     })
     .put((req, res ) => 
     {
