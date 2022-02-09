@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const { cors } = require('./cors/Cors.js');
 const records = require('./routes/records');
+const users = require('./routes/Users');
 app.use(express.json());
 app.use((req, res, next) => 
 {
@@ -10,6 +11,7 @@ app.use((req, res, next) =>
     next();
 });
 app.use('/records', records);
+app.use('/users', users);
 app.use(cors());
 app.listen(4000, (err) => 
 {
