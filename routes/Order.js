@@ -34,12 +34,18 @@ router.route('/:id')
     })
     .put((req, res ) => 
     {
+        const index = orders.findIndex(item => item.id == req.params.id);
+        if(index === -1)
+        {
+            res.status(404).send('cannot found');
+        }
+        orders[ index ].quantity = req.body.quantity;
         const { id } = req.params;
         res.status(200).send('order ID' + id + 'edited');
     })
     .delete(( req, res) => 
     {
-        const { id } = req.params;
+        const { id } = orders.findIndex(item => item.id == req.params.id);
         res.status(200).send('order ID' + id + 'deleted');
     });
 
