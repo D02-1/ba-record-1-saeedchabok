@@ -19,6 +19,7 @@
   "homepage": "https://github.com/D02-1/ba-record-1-saeedchabok#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "lowdb": "^1.0.0"
+    "lowdb": "^1.0.0",
+    "morgan": "^1.10.0"
   }
 }

@@ -20,6 +20,7 @@ router.route('/')
         users.push(user);
         res.status(200).send(user);
     });
+    
 router.route('/:id')
     .get((req, res) => 
     {

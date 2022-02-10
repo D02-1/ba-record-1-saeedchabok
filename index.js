@@ -1,9 +1,14 @@
 const express = require('express');
-const app = express();
-const { cors } = require('./cors/Cors.js');
+const morgan = require('morgan');
+
+const { cors } = require('./cors/cors.js');
 const records = require('./routes/records');
-const users = require('./routes/Users');
-const orders = require('./routes/Order');
+const users = require('./routes/users');
+const orders = require('./routes/order');
+
+const app = express();
+
+app.use( morgan ('combined'));
 app.use(express.json());
 app.use((req, res, next) => 
 {
@@ -14,8 +19,8 @@ app.use((req, res, next) =>
 app.use('/records', records);
 app.use('/users', users);
 app.use('/orders', orders);
-
 app.use(cors());
+
 app.listen(4000, (err) => 
 {
     if (err)

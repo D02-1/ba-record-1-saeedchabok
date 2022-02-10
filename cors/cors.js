@@ -7,5 +7,4 @@ exports.cors = () =>
         res.header('Access-Control-Allow-Methods', 'POST,GET,DELETE,OPTIONS,PUT');
         next();
     };
-
 };
