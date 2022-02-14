@@ -1,4 +1,6 @@
 const express = require('express');
+const getordercontroller = require('../controller/getordercontroller');
+const orderPost = require('../controller/postordercontroller');
 const router = express.Router();
 const orders = 
 [ 
@@ -9,20 +11,8 @@ const orders =
 ];
 
 router.route('/')
-    .get(( req, res) => 
-    {
-        res.status(200).send(orders);
-    })
-    .post((req, res) => 
-    {
-        const order =
-        {
-            id: orders[ orders.length - 1 ].id + 1,
-            quantity: req.body.quantity
-        };
-        orders.push(order);
-        res.status(200).send(order);
-    });
+    .get(getordercontroller(orders))
+    .post(orderPost(orders));
     
 router.route('/:id')
     .get((req, res) => 
