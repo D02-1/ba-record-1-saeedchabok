@@ -1,6 +1,7 @@
 const express = require('express');
-const getordercontroller = require('../controller/getordercontroller');
-const orderPost = require('../controller/postordercontroller');
+const getordercontroller = require('../controller/ordercontroller/getordercontroller');
+const orderPost = require('../controller/ordercontroller/postordercontroller');
+const getorderbyid = require('../controller/ordercontroller/getorderbyid');
 const router = express.Router();
 const orders = 
 [ 
@@ -15,14 +16,7 @@ router.route('/')
     .post(orderPost(orders));
     
 router.route('/:id')
-    .get((req, res) => 
-    {
-        const order = orders.find(item => item.id == req.params.id);
-        if (order && order.id)
-            res.status(200).send(`${order.id} , ${order.quantity} `);
-        else
-            res.status(404).send('cannot found any order');
-    })
+    .get(getorderbyid(orders))
     .put((req, res ) => 
     {
         const index = orders.findIndex(item => item.id == req.params.id);
