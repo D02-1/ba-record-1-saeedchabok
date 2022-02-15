@@ -1,5 +1,12 @@
 const express = require('express');
-const  { usersControllerGet, postUserController } = require('../controller/users/userscontroller');
+const  
+    { 
+        usersControllerGet,
+        postUserController,
+        getUsersControllerById,
+        putUsersControllerById,
+        deleteUsersControllerById 
+    } = require('../controller/users/userscontroller');
 const router = express.Router();
 
 router.route('/')
@@ -7,23 +14,8 @@ router.route('/')
     .post(postUserController());
     
 router.route('/:id')
-    .get((req, res) => 
-    {
-        const user = users.find(item => item.id == req.params.id);
-        if (user && user.id)
-            res.status(200).send(`${user.id} , ${user.firstName} `);
-        else
-            res.status(404).send('cannot found the user');
-    })
-    .put((req, res ) => 
-    {
-        const { id } = req.params;
-        res.status(200).send('user with ID' + id + 'edited');
-    })
-    .delete(( req, res) => 
-    {
-        const { id } = req.params;
-        res.status(200).send('user with ID' + id + 'delete');
-    });
+    .get(getUsersControllerById())
+    .put(putUsersControllerById())
+    .delete(deleteUsersControllerById());
 
 module.exports = router;

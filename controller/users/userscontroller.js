@@ -30,8 +30,41 @@ const postUserController = () =>
     };
 };
 
+const getUsersControllerById = () =>
+{
+    return(req, res) => 
+    {
+        const user = users.find(item => item.id == req.params.id);
+        if (user && user.id)
+            res.status(200).send(`${user.id} , ${user.firstName} `);
+        else
+            res.status(404).send('cannot found the artist');
+    };
+};
+
+const putUsersControllerById = () =>
+{
+    return(req, res ) => 
+    {
+        const { id } = req.params;
+        res.status(200).send('post with ID' + id + 'edited');
+    };
+};
+
+const deleteUsersControllerById = () =>
+{
+    return( req, res) => 
+    {
+        const { id } = req.params;
+        res.status(200).send('post with ID' + id + 'delete');
+    };
+};
+
 module.exports =
 {
     usersControllerGet,
-    postUserController
+    postUserController,
+    getUsersControllerById,
+    putUsersControllerById,
+    deleteUsersControllerById
 };
