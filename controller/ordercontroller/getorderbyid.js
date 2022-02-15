@@ -1,4 +1,4 @@
-const getorderbyid = (input) =>
+const getOrderById = (input) =>
 {
     return(req, res) => 
     {
@@ -10,4 +10,4 @@ const getorderbyid = (input) =>
     };
 };
 
-module.exports = getorderbyid;
+module.exports = getOrderById;

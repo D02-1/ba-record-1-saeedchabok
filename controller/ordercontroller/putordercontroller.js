@@ -1,4 +1,4 @@
-const putordercontroller = (input) =>
+const putOrderController = (input) =>
 {
     return(req, res ) => 
     {
@@ -13,4 +13,4 @@ const putordercontroller = (input) =>
     };
 };
 
-module.exports = putordercontroller;
+module.exports = putOrderController;
