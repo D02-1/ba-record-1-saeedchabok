@@ -1,12 +1,9 @@
 const express = require('express');
+const  getUsersController = require('../controller/users/userscontroller');
 const router = express.Router();
-const users = require('../public/initusers');
 
 router.route('/')
-    .get(( req, res) => 
-    {
-        res.status(200).send(users);
-    })
+    .get(getUsersController())
     .post((req, res) => 
     {
         const user =
