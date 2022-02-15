@@ -1,5 +1,5 @@
 const express = require('express');
-const { getRecordController, postRecordController, getRecordControllerById } = require('../controller/records/recordscontroller');
+const { getRecordController, postRecordController, getRecordControllerById, putRecordControllerById, deleteRecordControllerById } = require('../controller/records/recordscontroller');
 const router = express.Router();
 
 router.route('/')
@@ -9,15 +9,7 @@ router.route('/')
 
 router.route('/:id')
     .get(getRecordControllerById())
-    .put((req, res ) => 
-    {
-        const { id } = req.params;
-        res.status(200).send('post with ID' + id + 'edited');
-    })
-    .delete(( req, res) => 
-    {
-        const { id } = req.params;
-        res.status(200).send('post with ID' + id + 'delete');
-    });
+    .put(putRecordControllerById())
+    .delete(deleteRecordControllerById());
 
 module.exports = router;

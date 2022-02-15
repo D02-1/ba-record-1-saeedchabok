@@ -51,10 +51,19 @@ const putRecordControllerById = () =>
     };
 };
 
+const deleteRecordControllerById = () =>
+{
+    return( req, res) => 
+    {
+        const { id } = req.params;
+        res.status(200).send('post with ID' + id + 'delete');
+    };
+};
 module.exports =
 {
     getRecordController,
     postRecordController,
     getRecordControllerById,
-    putRecordControllerById
+    putRecordControllerById,
+    deleteRecordControllerById
 };
