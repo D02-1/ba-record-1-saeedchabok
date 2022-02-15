@@ -3,7 +3,7 @@ const getordercontroller = require('../controller/ordercontroller/getordercontro
 const orderPost = require('../controller/ordercontroller/postordercontroller');
 const getorderbyid = require('../controller/ordercontroller/getorderbyid');
 const putordercontroller = require('../controller/ordercontroller/putordercontroller');
-const deleteorder = require('../controller/ordercontroller/deleteordercontroller');
+const deleteOrder = require('../controller/ordercontroller/deleteordercontroller');
 const router = express.Router();
 const orders = 
 [ 
@@ -20,6 +20,6 @@ router.route('/')
 router.route('/:id')
     .get(getorderbyid(orders))
     .put(putordercontroller(orders))
-    .delete(deleteorder(orders));
+    .delete(deleteOrder(orders));
 
 module.exports = router;

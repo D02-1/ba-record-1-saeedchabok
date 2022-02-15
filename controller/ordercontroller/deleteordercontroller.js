@@ -1,4 +1,4 @@
-const deleteorder = (input) =>
+const deleteOrder = (input) =>
 {
     ( req, res) => 
     {
@@ -7,4 +7,4 @@ const deleteorder = (input) =>
     };
 };
 
-module.exports = deleteorder;
+module.exports = deleteOrder;
