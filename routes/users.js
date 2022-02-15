@@ -1,22 +1,10 @@
 const express = require('express');
-const  getUsersController = require('../controller/users/userscontroller');
+const  { usersControllerGet, postUserController } = require('../controller/users/userscontroller');
 const router = express.Router();
 
 router.route('/')
-    .get(getUsersController())
-    .post((req, res) => 
-    {
-        const user =
-        {
-            id: users[ users.length - 1 ].id + 1,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            Password: req.body.password,
-        };
-        users.push(user);
-        res.status(200).send(user);
-    });
+    .get(usersControllerGet())
+    .post(postUserController());
     
 router.route('/:id')
     .get((req, res) => 
