@@ -1,5 +1,13 @@
 const express = require('express');
-const { getRecordController, postRecordController, getRecordControllerById, putRecordControllerById, deleteRecordControllerById } = require('../controller/records/recordscontroller');
+const 
+    { 
+        getRecordController, 
+        postRecordController, 
+        getRecordControllerById, 
+        putRecordControllerById, 
+        deleteRecordControllerById 
+    } 
+= require('../controller/records/recordscontroller');
 const router = express.Router();
 
 router.route('/')
