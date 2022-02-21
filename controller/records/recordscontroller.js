@@ -1,15 +1,11 @@
 let records = require('../../public/initdata');
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-
-const adapter = new FileSync('db.json');
-const db = low(adapter);
-
+const record = require('../../model/recordsmodel'); 
 const getRecordController = () =>
 {
-    return(req, res) => 
+    return async(req, res) => 
     {
-        res.status(200).send(records);
+        const recordAll = await record.find();
+        res.status(200).send(recordAll);
     };
 };
 const postRecordController = () =>

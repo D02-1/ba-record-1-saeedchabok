@@ -1,12 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
 
+const app = express();
+
+const mongoose = require('mongoose');
 const { cors } = require('./cors/cors.js');
 const records = require('./routes/records');
 const users = require('./routes/users');
 const orders = require('./routes/order');
-
-const app = express();
 
 app.use( morgan ('tiny'));
 app.use(express.json());
@@ -20,6 +21,8 @@ app.use('/records', records);
 app.use('/users', users);
 app.use('/orders', orders);
 app.use(cors());
+
+mongoose.connect('mongodb://localhost:27017/shoping').then(() => {console.log('db connect');}).catch(err => {console.log('db is not connectet', err.message);});
 
 app.listen(4000, (err) => 
 {
