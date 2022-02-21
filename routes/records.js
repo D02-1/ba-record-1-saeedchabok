@@ -16,7 +16,7 @@ router.route('/')
     .post(postRecordController());
 
 router.route('/:id')
-    .get(getRecordControllerById())
+    .get(getRecordControllerById)
     .put(putRecordControllerById())
     .delete(deleteRecordControllerById());
 

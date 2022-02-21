@@ -1,41 +1,41 @@
-let records = require('../../public/initdata');
-const record = require('../../model/recordsmodel'); 
+const Records = require('../../model/recordsmodel'); 
+const mongoose = require('mongoose');
 const getRecordController = () =>
 {
     return async(req, res) => 
     {
-        const recordAll = await record.find();
+        const recordAll = await Records.find();
         res.status(200).send(recordAll);
     };
 };
 const postRecordController = () =>
 {
-    return(req, res) => 
+    return async (req, res) => 
     {
-        const record =
+        const newRecord = new Records(
+            {
+                artist: req.body.artist,
+                title: req.body.title,
+                year: req.body.year,
+                price: req.body.price,
+            });
+        try 
         {
-            id: records[ records.length - 1 ].id + 1,
-            artist: req.body.artist,
-            title: req.body.title,
-            year: req.body.year,
-            price: req.body.price,
-        };
-        res.status(200).send(records);
-        records.push(record);
-        db.defaults(records).write();
+            await newRecord.save();
+        }
+        catch(error)
+        {
+            console.log(error.message);
+        }    
+        res.status(200).send(newRecord);
     };
 };
 
 const getRecordControllerById = () =>
 {
-    return(req, res) => 
-    {
-        const record = records.find(item => item.id == req.params.id);
-        if (record && record.id)
-            res.status(200).send(`${record.id} , ${record.artist} `);
-        else
-            res.status(404).send('cannot found the artist');
-    };
+    const { id } = req.params;
+    const recordByID = Records.findById({ _id: id });
+    res.status(200).send(recordByID);
 };
 
 const putRecordControllerById = () =>
