@@ -31,11 +31,19 @@ const postRecordController = () =>
     };
 };
 
-const getRecordControllerById = () =>
+const getRecordControllerById = async (req, res) =>
 {
     const { id } = req.params;
-    const recordByID = Records.findById({ _id: id });
-    res.status(200).send(recordByID);
+    const controllId = mongoose.isValidObjectId(id);
+    if(!controllId)
+        return res.status(400).send('bad id');
+    const recordByID = await Records.findById(id);
+    if(recordByID)
+        res.status(200).send(recordByID);    
+    else
+    {
+        res.status(404).send('can not found the product');
+    }
 };
 
 const putRecordControllerById = () =>
@@ -43,6 +51,7 @@ const putRecordControllerById = () =>
     return(req, res ) => 
     {
         const { id } = req.params;
+       
         res.status(200).send('post with ID' + id + 'edited');
     };
 };
