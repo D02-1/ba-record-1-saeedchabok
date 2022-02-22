@@ -1,10 +1,14 @@
-const deleteOrder = (input) =>
+const Order = require('../../model/orderModel');
+const mongoose = require('mongoose');
+const deleteOrder = async (req, res) =>
 {
-    return( req, res) => 
-    {
-        const { id } = input.findIndex(item => item.id == req.params.id);
-        res.status(200).send('order ID' + id + 'deleted');
-    };
+    const controllId = mongoose.isValidObjectId(req.params.id);
+    if(!controllId)
+        return res.status(400).send('bad id');
+    const deleteOrder = await Order.findByIdAndDelete(req.params.id);
+    if(!deleteOrder)
+        return res.status(404).send('can not found order Id');
+    res.status(200).send(`id ${req.params.id} deleted`);
 };
 
 module.exports = deleteOrder;

@@ -5,21 +5,21 @@ const getOrderById = require('../controller/ordercontroller/getorderbyid');
 const putOrderController = require('../controller/ordercontroller/putordercontroller');
 const deleteOrder = require('../controller/ordercontroller/deleteordercontroller');
 const router = express.Router();
-const orders = 
-[ 
-    {
-        id:0,
-        quantity:0
-    } 
-];
+// const orders = 
+// [ 
+//     {
+//         id:0,
+//         quantity:0
+//     } 
+// ];
 
 router.route('/')
-    .get(getOrderController(orders))
-    .post(orderPost(orders));
+    .get(getOrderController)
+    .post(orderPost);
     
 router.route('/:id')
-    .get(getOrderById(orders))
-    .put(putOrderController(orders))
-    .delete(deleteOrder(orders));
+    .get(getOrderById)
+    .put(putOrderController)
+    .delete(deleteOrder);
 
 module.exports = router;

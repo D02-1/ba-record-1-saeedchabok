@@ -1,13 +1,19 @@
-const getOrderById = (input) =>
+const Order = require('../../model/orderModel');
+const mongoose = require('mongoose');
+const getOrderById = async (req, res) =>
+
 {
-    return(req, res) => 
+    const { id } = req.params;
+    const controllId = mongoose.isValidObjectId(id);
+    if(!controllId)
+        return res.status(400).send('bad id');
+    const orderByID = await Order.findById(id);
+    if(orderByID)
+        res.status(200).send(orderByID);    
+    else
     {
-        const order = input.find(item => item.id == req.params.id);
-        if (order && order.id)
-            res.status(200).send(`${order.id} , ${order.quantity} `);
-        else
-            res.status(404).send('cannot found any order');
-    };
+        res.status(404).send('can not found the Order');
+    }
 };
 
 module.exports = getOrderById;

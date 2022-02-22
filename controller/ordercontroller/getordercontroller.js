@@ -1,8 +1,8 @@
-const getOrderController = (input) =>
+const Order = require('../../model/orderModel');
+const getOrderController = async (req, res) =>
 {
-    return( req, res) => 
-    {
-        res.status(200).send(input);
-    };
+    const allOrders = await Order.find();
+    res.status(200).send(allOrders);
 };
+
 module.exports = getOrderController;

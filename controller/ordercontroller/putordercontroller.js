@@ -1,16 +1,26 @@
-const putOrderController = (input) =>
+const Order = require('../../model/orderModel');
+const mongoose = require('mongoose');
+const putOrderController = async (req, res) =>
 {
-    return(req, res ) => 
+    const { id } = req.params;
+    const controllId = mongoose.isValidObjectId(id);
+    if(!controllId)
+        return res.status(400).send('bad id');
+    const findOrderById = await Order.findById(id);
+    if(!findOrderById)
+        return res.status(404).send('can not found record Id');
+
+    findOrderById.quantity= req.body.quantity || findOrderById.quantity;
+   
+    try 
     {
-        const index = input.findIndex(item => item.id == req.params.id);
-        if(index === -1)
-        {
-            res.status(404).send('cannot found');
-        }
-        input[ index ].quantity = req.body.quantity;
-        const { id } = req.params;
-        res.status(200).send('order ID' + id + 'edited');
-    };
+        await findOrderById.save();
+    }
+    catch(error)
+    {
+        console.log(error.message);
+    }    
+    res.status(200).send(findOrderById);
 };
 
 module.exports = putOrderController;

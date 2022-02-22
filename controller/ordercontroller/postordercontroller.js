@@ -1,15 +1,17 @@
-const orderPost = (input) =>
+const Order = require('../../model/orderModel');
+const orderPost = async (req, res) =>
+
 {
-    return(req, res) => 
+    const newOrder = new Order({ quantity: req.body.quantity }); 
+    try 
     {
-        const order =
-        {
-            id: input[ input.length - 1 ].id + 1,
-            quantity: req.body.quantity
-        };
-        input.push(order);
-        res.status(200).send(order);
-    };
+        await newOrder.save();
+        res.status(200).send(newOrder);
+    }
+    catch(error)
+    {
+        console.log(error.message);
+    }    
 };
 
 module.exports = orderPost;
