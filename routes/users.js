@@ -10,12 +10,12 @@ const
 const router = express.Router();
 
 router.route('/')
-    .get(usersControllerGet())
-    .post(postUserController());
+    .get(usersControllerGet)
+    .post(postUserController);
     
 router.route('/:id')
-    .get(getUsersControllerById())
-    .put(putUsersControllerById())
-    .delete(deleteUsersControllerById());
+    .get(getUsersControllerById)
+    .put(putUsersControllerById)
+    .delete(deleteUsersControllerById);
 
 module.exports = router;
