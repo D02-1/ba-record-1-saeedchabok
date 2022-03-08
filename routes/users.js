@@ -1,4 +1,5 @@
 const express = require('express');
+const validator = require('express-validator');
 const  
     { 
         usersControllerGet,
@@ -11,7 +12,7 @@ const router = express.Router();
 
 router.route('/')
     .get(usersControllerGet)
-    .post(postUserController);
+    .post(  validator.body('firstName').isEmail().trim().withMessage('firstName muss eine email adresse sein!'), postUserController);
     
 router.route('/:id')
     .get(getUsersControllerById)
