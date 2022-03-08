@@ -1,5 +1,6 @@
 const User = require('../../model/userModel');
 const mongoose = require('mongoose');
+const validator = require('express-validator');
 
 const usersControllerGet = async (req, res) =>
 {
@@ -10,17 +11,37 @@ const usersControllerGet = async (req, res) =>
 const postUserController = async (req, res) =>
 
 {
+    const errors = validator.validationResult(req).errors;
+    if(errors.length > 0)
+    {
+        return res.status(400).send( errors );
+    }
     const newUser = new User(
         {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
             Password: req.body.password,
+  
+            profile:
+        {
+            education: req.body.education,
+            darkMode: req.body.darkMode,
+            Phone: req.body.Phone
+        }
         });
     try 
     {
-        await newUser.save();
-        res.status(200).send(newUser);
+        if (!req.body.Password)
+        {
+            res.status(400).send('password required');
+        }
+        else
+        {
+            newUser.Password = hashPassword(req.body.Password);
+            await newUser.save();
+            res.status(200).send(newUser);
+        }
     }
     catch(error)
     {
@@ -56,7 +77,10 @@ const putUsersControllerById = async (req, res ) =>
     findUserById.firstName= req.body.firstName || findUserById.firstName;
     findUserById.lastName= req.body.lastName || findUserById.lastName;
     findUserById.email= req.body.email || findUserById.email;
-    findUserById. Password= req.body. Password || findUserById. Password;
+    req.body.Password &&  (findUserById.Password = hashPassword(req.body.Password) );
+    findUserById.education= req.body.education || findUserById.education;
+    findUserById.darkMode= req.body.darkMode || findUserById.darkMode;
+    findUserById.Phone= req.body.Phone || findUserById.Phone;
     try 
     {
         await findUserById.save();
