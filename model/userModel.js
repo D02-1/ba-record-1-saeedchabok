@@ -15,6 +15,14 @@ hashPassword = (Password) =>
     const hash = crypto.createHmac('sha256', secret).update(Password).digest('hex');
     return hash;
 };
+comparePassword = function (loginPassword)
+{
+    if(this.password !== this.hashPassword(loginPassword))
+    {
+        return false;
+    }
+    return true;
+};
 
 const userModel = mongoose.model('user', user);
 

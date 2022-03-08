@@ -13,7 +13,7 @@ const router = express.Router();
 router.route('/')
     .get(usersControllerGet)
     .post(  validator.body('firstName').isEmail().trim().withMessage('firstName muss eine email adresse sein!'), postUserController);
-    
+   
 router.route('/:id')
     .get(getUsersControllerById)
     .put(putUsersControllerById)
