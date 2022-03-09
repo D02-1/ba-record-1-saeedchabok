@@ -1,36 +1,26 @@
 const User = require('../../model/userModel');
-const validator = require('express-validator');
-
-const loginController = async (req, res) =>
-
+const jwt = require('jsonwebtoken');
+const signAccessToken = data =>
 {
-    const errors = validator.validationResult(req).errors;
-    if(errors.length > 0)
+    return jwt.sign(data, 'hamid');
+};
+const  loginController = async ( req, res) =>
+{
+    const { firstName, Password } = req.body;
+    const foundUser = await User.findOne({ firstName });
+    if(foundUser)
     {
-        return res.status(400).send( errors );
-    }
-    const newUser = new User(
+        if(foundUser.comparePassword(Password))
         {
-            firstName: req.body.firstName,
-            Password: req.body.password,
-        });
-    try 
-    {
-        if (!req.body.Password)
-        {
-            res.status(400).send('password required');
+            res.header('x-auth-token', signAccessToken({ firstName }) ).status(200).json({ success: true });
         }
         else
         {
-            newUser.Password = hashPassword(req.body.Password);
-            await newUser.save();
-            res.status(200).send(newUser);
+            res.status(401).json({ success: false });
         }
     }
-    catch(error)
-    {
-        console.log(error.message);
-    }     
+    else
+    { res.status(404).json({ success: false, message: 'USER NOT FOUND' }); }; 
+     
 };
-
 module.exports = loginController;
